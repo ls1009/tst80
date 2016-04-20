@@ -6,5 +6,6 @@ public class Hello2 {
     System.out.println("okok");
     System.out.println("good");
     System.out.println("test01");
+    System.out.println("test02");
   }
 }
