@@ -16,7 +16,7 @@ public class ProjectController {
   }
   
 	public String prompt() {
-		System.out.print("게시판 관리> ");
+		System.out.print("프로젝트 관리> ");
 		return sc.nextLine().toLowerCase();
 	}
 
