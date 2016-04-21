@@ -22,6 +22,7 @@ public class MemberController {
   public void add(Scanner keyScan) {
     Member member = new Member();
 
+    
     System.out.print("이름? ");
     member.setName(keyScan.nextLine());
 
@@ -33,6 +34,10 @@ public class MemberController {
 
     System.out.print("전화? ");
     member.setTel(keyScan.nextLine());
+    
+    System.out.print("역할? ");
+    member.setPart(keyScan.nextLine());
+    
 
     if (CommandUtil.confirm(keyScan, "저장하시겠습니까?")) {
       try {
@@ -40,6 +45,7 @@ public class MemberController {
         System.out.println("저장하였습니다.");
       } catch (Exception e) {
         System.out.println("데이터를 저장하는데 실패했습니다.");
+        e.printStackTrace();
       }
     } else {
       System.out.println("저장을 취소하였습니다.");
@@ -74,8 +80,8 @@ public class MemberController {
       List<Member> members = memberDao.selectList();
       
       for (Member member : members) {
-        System.out.printf("%d, %s, %s, %s\n", member.getNo(),
-            member.getName(), member.getEmail(), member.getTel());
+        System.out.printf("%d, %s, %s, %s, %s\n", member.getNo(),
+            member.getName(), member.getEmail(), member.getTel(), member.getPart());
       }
     } catch (Exception e) {
       throw new RuntimeException("회원 데이터 로딩 실패!", e);
@@ -105,6 +111,9 @@ public class MemberController {
   
       System.out.printf("전화(%s)? ", member.getTel());
       member.setTel(keyScan.nextLine());
+      
+      System.out.printf("역할(%s)? ", member.getPart());
+      member.setPart(keyScan.nextLine());
   
       if (CommandUtil.confirm(keyScan, "변경하시겠습니까?")) {
         int count = memberDao.update(member);

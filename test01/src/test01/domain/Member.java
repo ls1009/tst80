@@ -7,6 +7,19 @@ public class Member {
   protected String password;
   protected String tel;
   protected String part;
+  
+  public Member() {
+  }
+  
+  public Member(int no, String name, String email, String password, String tel, String part) {
+    this.no = no;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.tel = tel;
+    this.part = part;
+  }
+  
   @Override
   public String toString() {
     return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", tel=" + tel
@@ -48,17 +61,5 @@ public class Member {
   public void setPart(String part) {
     this.part = part;
   }
-  public Member(int no, String name, String email, String password, String tel, String part) {
-    super();
-    this.no = no;
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.tel = tel;
-    this.part = part;
-  }
-  public Member() {
-    super();
-    // TODO Auto-generated constructor stub
-  }
+
 }
