@@ -6,12 +6,12 @@ public class Board {
 	private int no;						//BNOS
 	private String title;				//BNM
 	private String content;				//CONT
-	private String password;
+	private String password;			//PASS
 	private Date createDate;			//CR_DT
 	private Date editDate;				//ED_DT
 	private int views;					//VIEWS
 	private String writer;				//WRRT
-	private int bno;					//BNO
+	private int pno;					//PNO
 	
 	@Override
 	public String toString() {
@@ -67,11 +67,12 @@ public class Board {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public int getBno() {
-		return bno;
+	public int getPno() {
+		return pno;
 	}
-	public void setBno(int bno) {
-		this.bno = bno;
+	public void setPno(int pno) {
+		this.pno = pno;
 	}
+	
 	
 }

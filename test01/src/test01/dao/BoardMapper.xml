@@ -8,19 +8,23 @@
     <id     column="BNOS"    property="no"/>
     <result column="BNM"  property="title"/>
     <result column="CONT"    property="content"/>
+    <result column="PASS"    property="password"/>
     <result column="CR_DT"    property="createDate"/>
     <result column="ED_DT"    property="editDate"/>
     <result column="WRRT"    property="writer"/>
+    <result column="PNO"    property="pno"/>
   </resultMap>
   <insert id="insert" parameterType="Board">
-    insert into BOARD(BNM,CONT,CR_DT,ED_DT,WRRT)
-    values(#{title},#{content},#{createDate},#{editDate},#{writer})
+    insert into BOARD(PNO,BNM,CONT,CR_DT,ED_DT,PASS,WRRT)
+    values(#{pno},#{title},#{content},curdate(),curdate(),#{password},#{writer})
   </insert>
   
   <update id="update" parameterType="Board">
     update BOARD set
       BNM=#{title},
-      CONT=#{content}
+      CONT=#{content},
+      ED_DT=curdate(),
+      PASS=#{password}
     where BNOS=#{no}
   </update>
   
@@ -30,12 +34,12 @@
   </delete>
 
   <select id="selectList" resultMap="BoardMap">
-    select BNOS, BNM, CONT, CR_DT, ED_DT, VIEWS, WRRT 
+    select BNOS, BNM, CONT, CR_DT, ED_DT, VIEWS, WRRT, PNO
     from BOARD
   </select>
   
     <select id="selectOne" parameterType="map" resultMap="BoardMap">
-    select BNOS, BNM, CONT, CR_DT, ED_DT, VIEWS, WRRT
+    select BNOS, BNM, CONT, CR_DT, ED_DT, PASS, VIEWS, WRRT, PNO
     from BOARD
     where 
     <if test="no != null">
