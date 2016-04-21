@@ -10,7 +10,7 @@ import test01.dao.MemberDao;
 import test01.domain.Member;
 
 public class AuthController {
-  Scanner keyScan;
+  Scanner keyScan = new Scanner(System.in);
   MemberDao memberDao;
   Session session;
   
@@ -73,13 +73,8 @@ public class AuthController {
     member.setName(keyScan.nextLine());
     
     String value = null;
-    while (true) {
-      System.out.print("이메일: ");
-      value = keyScan.nextLine();
-      if (value.matches("[a-zA-Z][\\w\\.]*@([\\w]+\\.)+\\.[a-zA-Z]{2,}"))
-        break;
-      System.out.println("이메일 형식에 맞지 않습니다. 예) aaa.aaa@bbb.com");
-    }
+    System.out.print("이메일: ");
+  	value = keyScan.nextLine();
     member.setEmail(value);
     
     String regex = null;
@@ -129,6 +124,7 @@ public class AuthController {
       System.out.println("회원 가입되었습니다.");
     } catch (Exception e) {
       System.out.println("회원 가입에 실패했습니다.");
+      e.printStackTrace();
     }
   }
 
@@ -138,7 +134,6 @@ public class AuthController {
     
     System.out.print("암호: ");
     String password = keyScan.nextLine();
-    
     Member member = memberDao.selectOneByEmail(email);
     
     if (member == null) {
@@ -147,15 +142,14 @@ public class AuthController {
     } else if (!member.getPassword().equals(password)) {
       System.out.println("암호가 맞지 않습니다.");
       return false;
-    }
-    
+    } 
     // 로그인 성공한 회원 정보를 세션에 보관한다.
     // why? 다른 컨틀롤러가 사용할 수 있도록!
     session.setAttribute("loginUser", member);
-    
     System.out.printf("환영합니다. %s님!\n", member.getName());
     
     return true;
+    
   }
 }
 
