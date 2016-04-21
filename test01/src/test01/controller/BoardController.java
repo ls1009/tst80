@@ -9,9 +9,36 @@ import test01.domain.Board;
 
 public class BoardController {
 	private BoardDao boardDao;
+	private Scanner sc = new Scanner(System.in);
 
 	public void setBoardDao(BoardDao boardDao) {
 		this.boardDao = boardDao;
+	}
+
+	public String prompt() {
+		System.out.print("게시판 관리> ");
+		return sc.nextLine().toLowerCase();
+	}
+
+	public void service() {
+		String input = null;
+		do {
+			input = prompt();
+			
+			if (input.equals("add")) {
+				doAdd(sc);
+			} else if (input.equals("list")) {
+				doList();
+			} else if (input.equals("update")) {
+				doUpdate(sc);
+			} else if (input.equals("delete")) {
+				doDelete(sc);
+			} else if (input.equals("quit")){
+				System.out.println("종료");
+			} else {
+			System.out.println("잘못된 명령어입니다.");
+			}
+		} while (!input.equals("quit"));
 	}
 
 	public void doAdd(Scanner sc) {
@@ -44,9 +71,8 @@ public class BoardController {
 			List<Board> boards = boardDao.selectList();
 
 			for (Board board : boards) {
-				System.out.printf("%d, %d, %s, %s, %s, %s, %s\n",
-						board.getPno(),	board.getNo(), board.getTitle(), board.getContent(),
-						board.getCreateDate(), board.getEditDate(), board.getWriter());
+				System.out.printf("%d, %d, %s, %s, %s, %s, %s\n", board.getPno(), board.getNo(), board.getTitle(),
+						board.getContent(), board.getCreateDate(), board.getEditDate(), board.getWriter());
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("게시물 데이터 로딩 실패!", e);
@@ -69,7 +95,7 @@ public class BoardController {
 			board.setContent(sc.nextLine());
 			System.out.printf("비밀번호(%s)? ", board.getPassword());
 			board.setPassword(sc.nextLine());
-			
+
 			if (CommandUtil.confirm(sc, "변경하시겠습니까?")) {
 				int count = boardDao.update(board);
 				if (count > 0) {

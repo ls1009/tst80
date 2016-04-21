@@ -4,22 +4,46 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import command.CommandUtil;
+import test01.command.CommandUtil;
 import test01.dao.ProjectDao;
 import test01.domain.Project;
 
 public class ProjectController {
   private ProjectDao pDao;
+  Scanner sc = new Scanner(System.in);
   public void setpDao(ProjectDao pDao) {
     this.pDao = pDao;
   }
   
+	public String prompt() {
+		System.out.print("게시판 관리> ");
+		return sc.nextLine().toLowerCase();
+	}
+
+	public void service() {
+		String input = null;
+		do {
+			input = prompt();
+			
+			if (input.equals("add")) {
+				add(sc);
+			} else if (input.equals("list")) {
+				list();
+			} else if (input.equals("update")) {
+				update(sc);
+			} else if (input.equals("delete")) {
+				delete(sc);
+			} else if (input.equals("quit")){
+				System.out.println("종료");
+			} else {
+			System.out.println("잘못된 명령어입니다.");
+			}
+		} while (!input.equals("quit"));
+	}
+ 
   public void add(Scanner keyScan) {
     Project p = new Project();
-    
-    System.out.print("프로젝트 번호? ");
-    p.setNo(Integer.parseInt(keyScan.nextLine()));
-    
+
     System.out.print("제목? ");
     p.setTitle(keyScan.nextLine());
 

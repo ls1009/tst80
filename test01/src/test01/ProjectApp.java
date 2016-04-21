@@ -8,7 +8,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import test01.command.Session;
 import test01.controller.AuthController;
+import test01.controller.BoardController;
 import test01.controller.ProjectController;
+import test01.dao.BoardDao;
 import test01.dao.MemberDao;
 import test01.dao.ProjectDao;
 import test01.domain.Member;
@@ -17,10 +19,12 @@ public class ProjectApp {
 
   static MemberDao memberDao = new MemberDao();
   static ProjectDao projectDao = new ProjectDao();
+  static BoardDao boardDao = new BoardDao();
   
   static Session session = new Session();
   static AuthController ac = new AuthController();
   static ProjectController pc = new ProjectController();
+  static BoardController bc = new BoardController();
   
   static Scanner keyScan = new Scanner(System.in);
   
@@ -68,11 +72,11 @@ public class ProjectApp {
       if(input.equals("1")) {
         
       } else if(input.equals("2")) {
-        
+    	pc.service();
       } else if(input.equals("3")) {
-        
+        bc.service();
       } else {
-        
+        System.out.println("없는 명령입니다.");
       }
     }
   }
@@ -87,11 +91,11 @@ public class ProjectApp {
       if(input.equals("1")) {
         
       } else if(input.equals("2")) {
-        
+    	  pc.service();
       } else if(input.equals("3")) {
-        
+    	  bc.service();
       } else {
-        
+        System.out.println("없는 명령입니다.");
       }
       
     }
