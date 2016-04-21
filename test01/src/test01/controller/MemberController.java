@@ -16,7 +16,7 @@ public class MemberController {
   }
   
 	public String prompt() {
-		System.out.print("프로젝트 관리> ");
+		System.out.print("회원 관리> ");
 		return sc.nextLine().toLowerCase();
 	}
 

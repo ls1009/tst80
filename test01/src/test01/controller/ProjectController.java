@@ -12,7 +12,7 @@ public class ProjectController {
   private ProjectDao pDao;
   Scanner sc = new Scanner(System.in);
   public void setpDao(ProjectDao pDao) {
-    this.pDao = pDao;
+    this.pDao =  pDao;
   }
   
 	public String prompt() {
@@ -68,6 +68,7 @@ public class ProjectController {
         System.out.println("저장하였습니다.");
       } catch (Exception e) {
         System.out.println("데이터를 저장하는데 실패했습니다.");
+        e.printStackTrace();
       }
     } else {
       System.out.println("저장을 취소하였습니다.");
@@ -76,7 +77,7 @@ public class ProjectController {
   
   public void delete(Scanner keyScan) {
     try {
-      System.out.print("삭제할 회원 번호는? ");
+      System.out.print("삭제할 프로젝트 번호는? ");
       int no = Integer.parseInt(keyScan.nextLine());
   
       if (CommandUtil.confirm(keyScan, "정말 삭제하시겠습니까?")) {
@@ -98,9 +99,8 @@ public class ProjectController {
   public void list() {
     try {
       List<Project> Projects = pDao.selectList();
-      
       for (Project p : Projects) {
-        System.out.printf("%d, %s, %s, %s\n", p.getNo(),
+        System.out.printf("%d. %s, %s, %s, %s\n", p.getNo(), p.getTitle(),
             p.getSd(), p.getEd(), p.getDec());
       }
     } catch (Exception e) {
