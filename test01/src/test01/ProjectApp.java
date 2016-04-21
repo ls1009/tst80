@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import test01.command.Session;
 import test01.controller.AuthController;
 import test01.controller.BoardController;
+import test01.controller.MemberController;
 import test01.controller.ProjectController;
 import test01.dao.BoardDao;
 import test01.dao.MemberDao;
@@ -25,6 +26,7 @@ public class ProjectApp {
   static AuthController ac = new AuthController();
   static ProjectController pc = new ProjectController();
   static BoardController bc = new BoardController();
+  static MemberController mc = new MemberController();
   
   static Scanner keyScan = new Scanner(System.in);
   
@@ -44,19 +46,18 @@ public class ProjectApp {
     ac.setMemberDao(memberDao);
     Member member = null;
     
-    
-    while(true) {
+    do {
       ac.service();
       member = (Member) session.getAttribute("loginUser");
-      if(member.part.equals("팀장")) {
+      if(member.getPart().equals("팀장")) {
         one();
       }
       
-      if(member.part.equals("팀원")) {
+      if(member.getPart().equals("팀원")) {
         two();
       }
             
-    }
+    } while (!member.equals("quit"));
     
     
   }// main
@@ -70,7 +71,7 @@ public class ProjectApp {
       System.out.println("3)게시물 관리");
       input = keyScan.nextLine();
       if(input.equals("1")) {
-        
+        mc.service();
       } else if(input.equals("2")) {
     	pc.service();
       } else if(input.equals("3")) {
@@ -89,7 +90,7 @@ public class ProjectApp {
       System.out.println("3)게시물 관리");
       input = keyScan.nextLine();
       if(input.equals("1")) {
-        
+    	  mc.service();
       } else if(input.equals("2")) {
     	  pc.service();
       } else if(input.equals("3")) {
