@@ -1,6 +1,5 @@
 package test01.controller;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,16 +15,16 @@ public class BoardController {
 	}
 
 	public void doAdd(Scanner sc) {
-		
 		Board board = new Board();
-
-		System.out.print("제목?");
+		System.out.print("프로젝트번호? ");
+		board.setPno(Integer.parseInt(sc.nextLine()));
+		System.out.print("제목? ");
 		board.setTitle(sc.nextLine());
-		System.out.print("내용?");
+		System.out.print("내용? ");
 		board.setContent(sc.nextLine());
-		board.setCreateDate(new Date(System.currentTimeMillis()));
-		board.setEditDate(new Date(System.currentTimeMillis()));
-		System.out.println("작성자?");
+		System.out.print("비밀번호? ");
+		board.setPassword(sc.nextLine());
+		System.out.print("작성자? ");
 		board.setWriter(sc.nextLine());
 		if (CommandUtil.confirm(sc, "저장하시겠습니까?")) {
 			try {
@@ -33,6 +32,7 @@ public class BoardController {
 				System.out.println("저장하였습니다.");
 			} catch (Exception e) {
 				System.out.println("데이터를 저장할 수 없습니다.");
+				e.printStackTrace();
 			}
 		} else {
 			System.out.println("저장을 취소하였습니다.");
@@ -44,8 +44,8 @@ public class BoardController {
 			List<Board> boards = boardDao.selectList();
 
 			for (Board board : boards) {
-				System.out.printf("%d, %s, %s, %s, %s, %s\n",
-						board.getNo(), board.getTitle(), board.getContent(),
+				System.out.printf("%d, %d, %s, %s, %s, %s, %s\n",
+						board.getPno(),	board.getNo(), board.getTitle(), board.getContent(),
 						board.getCreateDate(), board.getEditDate(), board.getWriter());
 			}
 		} catch (Exception e) {
@@ -63,12 +63,13 @@ public class BoardController {
 				System.out.println("유효하지 않은 번호입니다.");
 				return;
 			}
-			System.out.printf("제목(%s)?", board.getTitle());
+			System.out.printf("제목(%s)? ", board.getTitle());
 			board.setTitle(sc.nextLine());
-			System.out.printf("내용(%s)?", board.getContent());
+			System.out.printf("내용(%s)? ", board.getContent());
 			board.setContent(sc.nextLine());
-			board.setEditDate(new Date(System.currentTimeMillis()));
-
+			System.out.printf("비밀번호(%s)? ", board.getPassword());
+			board.setPassword(sc.nextLine());
+			
 			if (CommandUtil.confirm(sc, "변경하시겠습니까?")) {
 				int count = boardDao.update(board);
 				if (count > 0) {
