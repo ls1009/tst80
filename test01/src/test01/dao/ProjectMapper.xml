@@ -21,8 +21,8 @@
        mybatis 설정 파일에 선언된 별명을 사용한다.
    -->
   <insert id="insert" parameterType="Project">
-    insert into PROJECT(PNO,TITL,ST_DT,EN_DT,DESCR,TNO,THNO)
-    values(#{no},#{title},#{sd},#{ed},#{dec},#{teamNo},#{teachNo})
+    insert into PROJECT(TITL,ST_DT,EN_DT,DESCR,TNO,THNO)
+    values(#{title},#{sd},#{ed},#{dec},#{teamNo},#{teachNo})
   </insert>
   
   <update id="update" parameterType="Project">
