@@ -16,15 +16,17 @@ public class BoardController {
 	}
 
 	public void doAdd(Scanner sc) {
+		
 		Board board = new Board();
 
 		System.out.print("제목?");
 		board.setTitle(sc.nextLine());
 		System.out.print("내용?");
 		board.setContent(sc.nextLine());
-		System.out.println("암호?");
-		board.setPassword(sc.nextLine());
 		board.setCreateDate(new Date(System.currentTimeMillis()));
+		board.setEditDate(new Date(System.currentTimeMillis()));
+		System.out.println("작성자?");
+		board.setWriter(sc.nextLine());
 		if (CommandUtil.confirm(sc, "저장하시겠습니까?")) {
 			try {
 				boardDao.insert(board);
@@ -42,8 +44,9 @@ public class BoardController {
 			List<Board> boards = boardDao.selectList();
 
 			for (Board board : boards) {
-				System.out.printf("%d, %s, %s, %d, %s\n", board.getNo(), board.getTitle(), board.getContent(),
-						board.getViews(), board.getWriter());
+				System.out.printf("%d, %s, %s, %s, %s, %s\n",
+						board.getNo(), board.getTitle(), board.getContent(),
+						board.getCreateDate(), board.getEditDate(), board.getWriter());
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("게시물 데이터 로딩 실패!", e);
@@ -78,6 +81,7 @@ public class BoardController {
 			}
 		} catch (Exception e) {
 			System.out.println("데이터 처리에 실패했습니다.");
+			e.printStackTrace();
 		}
 	}
 
